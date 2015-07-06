@@ -73,7 +73,14 @@ func (c *ImageChangeController) HandleImageRepo(repo *imageapi.ImageStream) erro
 			if trigger.Type != buildapi.ImageChangeBuildTriggerType {
 				continue
 			}
-			fromStreamName := getImageStreamNameFromReference(from)
+
+                        // Find which image is the trigger
+                        imageReference := trigger.ImageChange.Image
+                        if imageReference == nil || imageReference.Kind != "ImageStreamTag" {
+				imageReference = from
+			}
+
+			fromStreamName := getImageStreamNameFromReference(imageReference)
 
 			fromNamespace := from.Namespace
 			if len(fromNamespace) == 0 {

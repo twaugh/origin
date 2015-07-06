@@ -334,6 +334,8 @@ type WebHookTrigger struct {
 
 // ImageChangeTrigger allows builds to be triggered when an ImageStream changes
 type ImageChangeTrigger struct {
+        Image *kapi.ObjectReference `json:"image,omitempty" description:"image change that should trigger build, must be ImageStreamTag"`
+
 	// LastTriggeredImageID is used internally by the ImageChangeController to save last
 	// used image ID for build
 	LastTriggeredImageID string
